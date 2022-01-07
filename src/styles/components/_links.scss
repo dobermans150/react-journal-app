@@ -1,0 +1,9 @@
+.link {
+  color: $dark-grey;
+  text-decoration: none;
+  display: block;
+  text-align: center;
+  &:hover {
+    text-decoration: underline;
+  }
+}
