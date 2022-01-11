@@ -1,5 +1,6 @@
 import { createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword, signInWithPopup, updateProfile, signOut } from 'firebase/auth';
 
+import Swal from 'sweetalert2'
 import { googleAuthProvider } from "../firebase/firebase-config"
 import { uiFinishLoading, uiStartLoading } from './ui';
 import { types } from "../types/types"
@@ -20,6 +21,7 @@ export const starLoginWithPassword = ( email, password ) => {
             .catch( ( e ) => {
                 dispatch( uiFinishLoading() )
                 console.log( e );
+                Swal.fire( 'Error', 'The username or password do not match', 'error' )
             } )
 
     }
@@ -43,6 +45,7 @@ export const startRegisterWithEmailPasswordName = ( email, password, name ) => {
             .catch( error => {
                 console.log( error )
                 dispatch( uiFinishLoading() )
+                Swal.fire( 'Error', 'The email is registered', 'error' )
             } )
 
     }
