@@ -16,6 +16,7 @@ import { PublicRoute } from './PublicRoute';
 import { PrivateRoute } from './PrivateRoute';
 
 import { login } from '../actions/auth';
+import { startGetAllNotes } from '../actions/notes';
 
 export const AppRouter = () => {
     const auth = getAuth();
@@ -27,7 +28,9 @@ export const AppRouter = () => {
         onAuthStateChanged( auth, user => {
             if ( user?.uid ) {
                 dispatch( login( user.uid, user.displayName ) )
+                dispatch( startGetAllNotes() )
                 setIsLoggedIn( true )
+
             } else {
                 setIsLoggedIn( false )
             }
@@ -39,7 +42,7 @@ export const AppRouter = () => {
 
     if ( checking ) {
         return (
-            <h1>Espere...</h1>
+            <h1>Please Wait...</h1>
         )
     }
 
