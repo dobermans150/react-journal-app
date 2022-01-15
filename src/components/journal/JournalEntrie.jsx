@@ -1,8 +1,9 @@
 import React from 'react'
+import { DateTime } from 'luxon'
 
 export const JournalEntrie = ( { id, date, title, body, url } ) => {
 
-
+    const { weekdayLong, day,  } = DateTime.fromMillis( date, { locale: 'en' } )
 
     return (
         <div className="journal__entry cursor pointer">
@@ -30,8 +31,8 @@ export const JournalEntrie = ( { id, date, title, body, url } ) => {
             </div>
 
             <div className="journal__entry-date-box">
-                <span>Monday</span>
-                <h4>28</h4>
+                <span>{ weekdayLong }</span>
+                <h4>{ day }</h4>
             </div>
         </div>
     )
