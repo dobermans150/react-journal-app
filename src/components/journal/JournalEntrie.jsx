@@ -1,24 +1,31 @@
 import React from 'react'
 
-export const JournalEntrie = () => {
+export const JournalEntrie = ( { id, date, title, body, url } ) => {
+
+
+
     return (
         <div className="journal__entry cursor pointer">
-            <div
-                className="journal__entry-picture"
-                style={ {
-                    backgroundSize: 'cover',
-                    backgroundImage: 'url(https://neliosoftware.com/es/wp-content/uploads/sites/3/2018/07/aziz-acharki-549137-unsplash-1200x775.jpg)'
-                } }
-            >
-            </div>
+            {
+                url && (
+                    <div
+                        className="journal__entry-picture"
+                        style={ {
+                            backgroundSize: 'cover',
+                            backgroundImage: `url(${url})`
+                        } }
+                    >
+                    </div>
+                )
+            }
 
             <div className="journal__entry-body">
                 <p className="journal__entry-title">
-                    Un nuevo dia
+                    { title }
                 </p>
 
                 <p className="journal__entry-content">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempora cupiditate
+                    { body }
                 </p>
             </div>
 
