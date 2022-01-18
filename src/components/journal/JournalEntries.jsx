@@ -1,6 +1,6 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
-import { JournalEntrie } from './JournalEntrie'
+import { JournalEntry } from './JournalEntry'
 
 export const JournalEntries = () => {
 
@@ -12,7 +12,7 @@ export const JournalEntries = () => {
             {
 
                 notes.map( note => (
-                    <JournalEntrie
+                    <JournalEntry
                         key={ note.id }
                         { ...note }
                     />

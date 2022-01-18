@@ -1,11 +1,12 @@
 import { db } from "../firebase/firebase-config";
-import { collection, addDoc } from 'firebase/firestore'
+import { collection, addDoc, updateDoc, doc } from 'firebase/firestore'
 import { loadNotes } from "../helpers/loadNotes";
 import { types } from "../types/types";
+import Swal from "sweetalert2";
 
 
 
-
+/* Add new note with the user */
 export const startNewNote = () => {
     return async ( dispatch, getState ) => {
 
@@ -25,6 +26,7 @@ export const startNewNote = () => {
 
 }
 
+/* Get all notes of the user */
 export const startGetAllNotes = () => {
     return async ( dispatch, getState ) => {
         const uid = getState().auth.uid
@@ -35,6 +37,29 @@ export const startGetAllNotes = () => {
 }
 
 
+/* Update a note */
+export const startSaveNote = ( note ) => {
+    return async ( dispatch, getState ) => {
+        const { uid } = getState().auth
+
+        if ( !note.url ) {
+            delete note.url
+        }
+
+        const noteToFireStore = { ...note }
+        delete noteToFireStore.id
+
+        const noteRef = doc( db, `${uid}/journal/notes/${note.id}` )
+
+        await updateDoc( noteRef, noteToFireStore );
+
+        dispatch( refreshNotes( note.id, noteToFireStore ) );
+        Swal.fire( 'Saved', note.title, 'success' );
+    }
+
+}
+
+/* Set active note in the state */
 export const activeNote = ( id, note ) => ( {
     type: types.notesActive,
     payload: {
@@ -43,11 +68,22 @@ export const activeNote = ( id, note ) => ( {
     }
 } )
 
-
+/* add notes in the state */
 export const setNotes = ( notes ) => ( {
     type: types.notesLoad,
     payload: [
         ...notes
     ]
+} )
+
+export const refreshNotes = ( id, note ) => ( {
+    type: types.notesUpdated,
+    payload: {
+        id,
+        note: {
+            id,
+            ...note
+        }
+    }
 } )
 
