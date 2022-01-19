@@ -10,7 +10,6 @@ export const JournalEntry = ( { id, date, title, body, url } ) => {
     /* Use Luxon to transform the date from milliseconds to a valid format*/
     const { weekdayLong, day } = DateTime.fromMillis( date, { locale: 'en', } )
 
-
     const handleEntryClick = () => {
         const notes = {
             id,

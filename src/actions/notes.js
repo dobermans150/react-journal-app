@@ -1,8 +1,9 @@
 import { db } from "../firebase/firebase-config";
 import { collection, addDoc, updateDoc, doc } from 'firebase/firestore'
+import Swal from "sweetalert2";
 import { loadNotes } from "../helpers/loadNotes";
 import { types } from "../types/types";
-import Swal from "sweetalert2";
+import { fileUpload } from "../helpers/fileUpload";
 
 
 
@@ -57,6 +58,32 @@ export const startSaveNote = ( note ) => {
         Swal.fire( 'Saved', note.title, 'success' );
     }
 
+}
+
+/* Upload File to CLoudinary and update the active note state */
+export const startUploadingFile = ( file ) => {
+    return async ( dispatch, getState ) => {
+        const { active: activeNote } = getState().notes;
+        Swal.fire( {
+            title: 'Uploading...',
+            text: 'Please Wait',
+            allowOutsideClick: false,
+            showConfirmButton: false,
+            willOpen: () => {
+                Swal.showLoading()
+            },
+
+
+        } )
+
+        const fileUrl = await fileUpload( file )
+        activeNote.url = fileUrl
+
+        dispatch( startSaveNote( activeNote ) )
+
+        Swal.close()
+
+    }
 }
 
 /* Set active note in the state */

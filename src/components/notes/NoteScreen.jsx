@@ -54,12 +54,12 @@ export const NoteScreen = () => {
 
                 </textarea>
 
-                { ( url )
+                { ( note.url )
                     && (
                         <div className="notes__image">
                             <img
                                 alt="imagen"
-                                src="https://neliosoftware.com/es/wp-content/uploads/sites/3/2018/07/aziz-acharki-549137-unsplash-1200x775.jpg"
+                                src={ note.url }
                             />
                         </div>
                     )
