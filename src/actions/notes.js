@@ -7,7 +7,7 @@ import { fileUpload } from "../helpers/fileUpload";
 
 
 
-/* Add new note with the user */
+/* Add new note to the user in firebase */
 export const startNewNote = () => {
     return async ( dispatch, getState ) => {
 
@@ -22,12 +22,13 @@ export const startNewNote = () => {
         const doc = await addDoc( collection( db, `${uid}/journal/notes` ), newNote )
 
         dispatch( activeNote( doc.id, newNote ) );
+        dispatch(addNewNote(doc.id, newNote ) );
 
     }
 
 }
 
-/* Get all notes of the user */
+/* Get all notes of the user from firebase*/
 export const startGetAllNotes = () => {
     return async ( dispatch, getState ) => {
         const uid = getState().auth.uid
@@ -38,7 +39,7 @@ export const startGetAllNotes = () => {
 }
 
 
-/* Update a note */
+/* Update a note in firebase*/
 export const startSaveNote = ( note ) => {
     return async ( dispatch, getState ) => {
         const { uid } = getState().auth
@@ -86,6 +87,7 @@ export const startUploadingFile = ( file ) => {
     }
 }
 
+/* Dele a note in firebase */
 export const startDeleting = ( id ) => {
     return async ( dispatch, getState ) => {
 
@@ -93,7 +95,7 @@ export const startDeleting = ( id ) => {
         const docRef = doc( db, `${uid}/journal/notes/${id}` );
         await deleteDoc( docRef )
 
-        dispatch(deleteNote(id));
+        dispatch( deleteNote( id ) );
 
     }
 }
@@ -107,7 +109,16 @@ export const activeNote = ( id, note ) => ( {
     }
 } )
 
-/* add notes in the state */
+/* Add a new note in the state of notes */
+export const addNewNote = ( id, note ) => ( {
+    type: types.notesAddNew,
+    payload: {
+        id,
+        ...note
+    }
+} )
+
+/*Get all notes of the user*/
 export const setNotes = ( notes ) => ( {
     type: types.notesLoad,
     payload: [
@@ -115,6 +126,7 @@ export const setNotes = ( notes ) => ( {
     ]
 } )
 
+/* Update a note */
 export const refreshNotes = ( id, note ) => ( {
     type: types.notesUpdated,
     payload: {
@@ -126,7 +138,13 @@ export const refreshNotes = ( id, note ) => ( {
     }
 } )
 
+/* Delete a note in the state */
 export const deleteNote = ( id ) => ( {
     type: types.notesDelete,
     payload: id
+} )
+
+/* Delete all notes and active note in the state after logout */
+export const noteLogout = () => ( {
+    type: types.notesLogoutCleaning,
 } )

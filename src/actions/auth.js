@@ -3,6 +3,7 @@ import { createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword, si
 import Swal from 'sweetalert2'
 import { googleAuthProvider } from "../firebase/firebase-config"
 import { uiFinishLoading, uiStartLoading } from './ui';
+import { noteLogout } from './notes';
 import { types } from "../types/types"
 
 export const starLoginWithPassword = ( email, password ) => {
@@ -77,6 +78,7 @@ export const startLogout = () => {
         const auth = getAuth()
         await signOut( auth )
         dispatch( logOut() )
+        dispatch( noteLogout() )
     }
 }
 
