@@ -56,10 +56,12 @@ export const RegisterScreen = () => {
 
     }
     return (
-        <>
+        < div className="animate__animated animate__fadeIn animated__faster">
             <h3 className="auth__title">Register</h3>
 
-            <form onSubmit={ handleRegistration }>
+            <form
+                onSubmit={ handleRegistration }
+            >
 
                 {
                     msgError && (
@@ -129,7 +131,7 @@ export const RegisterScreen = () => {
             </form>
 
 
-        </>
+        </ div>
     )
 
 }

@@ -38,6 +38,7 @@ export const notesReducer = ( state = initialState, action ) => {
                         : note
                 )
             }
+
         case types.notesDelete:
             return {
                 ...state,

@@ -29,10 +29,13 @@ export const LoginScreen = () => {
     }
 
     return (
-        <>
+        <div className="animate__animated animate__fadeIn animated__faster">
             <h3 className="auth__title">Login</h3>
 
-            <form onSubmit={ handleLogin }>
+            <form
+                onSubmit={ handleLogin }
+                className="animate__animated animate__fadeIn animated__faster"
+            >
 
                 <input
                     autoComplete='off'
@@ -89,6 +92,6 @@ export const LoginScreen = () => {
             </form>
 
 
-        </>
+        </div>
     )
 }
